@@ -1,345 +1,460 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curso CSS</title>
-    <link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="./css/normalize.css">
-    <link rel="stylesheet" href="./css/estilos.css">
+    <title>MochiFind | Sistema Inteligente de Localizacion</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Carga de Lucide Icons (para iconos SVG modernos) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Configuración de la fuente Inter y estilos -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        /* --- Base y Paleta de Colores --- */
+        body {
+            font-family: 'Inter', 'Noto Sans', sans-serif;
+            background-color: #0b0c10; /* Fondo Apple: Negro profundo */
+            color: #e0f2f1; /* Texto cian muy claro */
+        }
+        
+        /* Definición de colores clave */
+        .color-accent { color: #84cc16; /* Verde Lima - Accent 1 */ }
+        .bg-accent { background-color: #84cc16; }
+        .hover-accent:hover { background-color: #65a30d; }
+        .border-accent { border-color: #84cc16; }
 
-    <meta name="theme-color" content="#2091F9">
-
-    <meta name="title" content="Aprende CSS desde cero">
-    <meta name="description"
-        content="Hola, soy una descripción que verás cuando busques algo de mi temática en Google.">
-
-
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://aprendecss.com">
-    <meta property="og:title" content="Aprende CSS desde cero">
-    <meta property="og:description"
-        content="Hola, soy una descripción que verás cuando busques algo de mi temática en Google.">
-    <meta property="og:image" content="https://aprendecss.com/images/css.jpg">
-
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://aprendecss.com/">
-    <meta property="twitter:title" content="Aprende CSS desde cero">
-    <meta property="twitter:description"
-        content="Hola, soy una descripción que verás cuando busques algo de mi temática en Google.">
-    <meta property="twitter:image" content="https://aprendecss.com/images/css.jpg">
+        .color-secondary { color: #3b82f6; /* Azul Eléctrico - Accent 2 */ }
+        .bg-secondary { background-color: #3b82f6; }
+        .border-secondary { border-color: #3b82f6; }
+        
+        /* --- Estilo de Título Apple --- */
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700; /* Bold */
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50%;
+            height: 4px;
+            background-color: #84cc16; /* Verde Lima */
+            border-radius: 9999px;
+        }
+        
+        /* --- Tarjetas Estilo Apple --- */
+        .apple-card {
+             background-color: #1a1e26; /* Fondo de tarjeta más claro */
+             transition: all 0.3s ease;
+             border: 1px solid #2d3748; /* Borde sutil */
+             border-radius: 24px; /* Bordes más redondeados */
+        }
+        .apple-card:hover {
+            border-color: #84cc16; /* Borde verde lima al pasar el ratón */
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -3px rgba(132, 204, 22, 0.2), 0 4px 6px -2px rgba(132, 204, 22, 0.1);
+        }
+        
+        /* --- ANIMACIONES DE SCROLL (Estilo Apple) --- */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px); /* Ligeramente desde abajo */
+            transition: opacity 0.8s cubic-bezier(0.215, 0.610, 0.355, 1), 
+                        transform 0.8s cubic-bezier(0.215, 0.610, 0.355, 1);
+            transition-delay: 100ms; /* Pequeño retraso */
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* --- Estilo Diagrama de Flujo --- */
+        .diagram-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+        .diagram-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 30%;
+        }
+        .diagram-arrow {
+            width: 20%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @media (max-width: 768px) {
+            .diagram-container { flex-direction: column; }
+            .diagram-item { width: 100%; margin-bottom: 1.5rem; }
+            .diagram-arrow { transform: rotate(90deg); margin: 1rem 0; width: 50px; height: 50px; }
+        }
+    </style>
 </head>
+<body class="antialiased">
 
-<body>
-
-    <header class="hero">
-        <nav class="nav container">
-            <div class="nav__logo">
-                <h2 class="nav__title">Curso CSS.</h2>
-            </div>
-
-            <ul class="nav__link nav__link--menu">
-                <li class="nav__items">
-                    <a href="#" class="nav__links">Inicio</a>
-                </li>
-                <li class="nav__items">
-                    <a href="#" class="nav__links">Acerca de</a>
-                </li>
-                <li class="nav__items">
-                    <a href="#" class="nav__links">Contacto</a>
-                </li>
-                <li class="nav__items">
-                    <a href="#" class="nav__links">Blog</a>
-                </li>
-
-                <img src="./images/close.svg" class="nav__close">
-            </ul>
-
-            <div class="nav__menu">
-                <img src="./images/menu.svg" class="nav__img">
-            </div>
-        </nav>
-
-        <section class="hero__container container">
-            <h1 class="hero__title">Aprende CSS3 desde CERO hasta dominarlo.</h1>
-            <p class="hero__paragraph">Elige aprender CSS de una vez por todas, una vez que termines este curso serás
-                capaz de crear cualquier layout con CSS y crear tus propias animaciones.</p>
-            <a href="#" class="cta">Comienza ahora</a>
-        </section>
+    <!-- 
+      Navegacion Fija (Estilo Apple "Glassmorphism")
+      - backdrop-blur-lg: Efecto cristal esmerilado
+      - bg-opacity-75: Translucido
+    -->
+    <header class="bg-[#1a1e26]/75 backdrop-blur-lg shadow-lg shadow-black/30 sticky top-0 z-20 border-b border-gray-700/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <h1 class="text-3xl font-bold color-accent tracking-tight flex items-center">
+                <i data-lucide="backpack" class="w-7 h-7 mr-2"></i>
+                MochiFind
+            </h1>
+            <nav class="hidden md:block">
+                <a href="#introduccion" class="text-gray-300 hover:text-green-300 px-3 py-2 rounded-md text-sm font-medium transition duration-150">Introduccion</a>
+                <a href="#problematica" class="text-gray-300 hover:text-green-300 px-3 py-2 rounded-md text-sm font-medium transition duration-150">Problematica</a>
+                <a href="#solucion" class="text-gray-300 hover:text-green-300 px-3 py-2 rounded-md text-sm font-medium transition duration-150">Solucion IoT</a>
+                <a href="#alcance" class="text-gray-300 hover:text-green-300 px-3 py-2 rounded-md text-sm font-medium transition duration-150">Alcance</a>
+                <a href="#futuro" class="text-gray-900 bg-accent hover-accent ml-6 px-5 py-2.5 rounded-full text-sm font-bold transition duration-300 shadow-xl shadow-green-600/50">Vision Futura</a>
+            </nav>
+        </div>
     </header>
 
-    <main>
-        <section class="container about">
-            <h2 class="subtitle">¿Qué aprenderás en este curso?</h2>
-            <p class="about__paragraph">Todo lo necesario y obligatorio de CSS, (Flexbox, Grid, Custom properties,
-                Position, Animaciones, Box Model y más)</p>
-
-            <div class="about__main">
-                <article class="about__icons">
-                    <img src="./images/shapes.svg" class="about__icon">
-                    <h3 class="about__title">CSS Layouts</h3>
-                    <p class="about__paragrah">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae tempore
-                        porro eius facilis?</p>
-                </article>
-
-                <article class="about__icons">
-                    <img src="./images/paint.svg" class="about__icon">
-                    <h3 class="about__title">Animaciones</h3>
-                    <p class="about__paragrah">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae tempore
-                        porro eius facilis?</p>
-                </article>
-
-                <article class="about__icons">
-                    <img src="./images/code.svg" class="about__icon">
-                    <h3 class="about__title">Sass</h3>
-                    <p class="about__paragrah">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae tempore
-                        porro eius facilis?</p>
-                </article>
+    <!-- 
+      Seccion Principal / Hero
+      - Más padding (espaciado)
+      - Tipografía más grande y audaz
+      - Animación de entrada
+    -->
+    <section id="introduccion" class="bg-[#0b0c10] pt-24 pb-32 sm:pt-32 sm:pb-40 relative overflow-hidden">
+        <!-- Fondo de patron sutil futurista -->
+        <div class="absolute inset-0 z-0 opacity-10" style="background-image: radial-gradient(#84cc16 0.5px, transparent 0.5px); background-size: 80px 80px;"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <span class="fade-in-section color-secondary font-bold text-md uppercase tracking-widest bg-gray-900/70 backdrop-blur-sm px-4 py-1 rounded-full inline-block shadow-md border border-blue-500/50">
+                INNOVACION UAC
+            </span>
+            
+            <h2 class="fade-in-section mt-6 text-6xl sm:text-7xl lg:text-8xl font-bold text-white leading-tight tracking-tight" style="transition-delay: 200ms;">
+                <span class="block">Protege lo Tuyo.</span> 
+                <span class="block color-accent">Localiza con MochiFind.</span>
+            </h2>
+            <p class="fade-in-section mt-8 text-xl text-gray-400 max-w-4xl mx-auto font-light" style="transition-delay: 300ms;">
+                Sistema inteligente de Localizacion en Tiempo Real y gestion de pertenencias, diseñado para erradicar la ansiedad por perdidas en el campus universitario.
+            </p>
+            <div class="fade-in-section mt-12 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6" style="transition-delay: 400ms;">
+                <!-- Boton Principal (Verde Lima) -->
+                <a href="#solucion" class="bg-accent text-gray-900 font-bold py-3.5 px-10 rounded-full shadow-2xl shadow-green-500/60 hover-accent transition duration-300 transform hover:scale-105 hover:shadow-green-600/70">
+                    Ver Solucion Tecnologica
+                </a>
+                <!-- Boton Secundario (Azul Eléctrico) -->
+                <a href="#problematica" class="bg-gray-800 color-secondary border-2 border-secondary font-bold py-3.5 px-10 rounded-full shadow-lg hover:bg-gray-700 transition duration-300 transform hover:scale-105">
+                    Impacto del Problema
+                </a>
             </div>
-        </section>
-
-        <section class="knowledge">
-            <div class="knowledge__container container">
-                <div class="knowledege__texts">
-                    <h2 class="subtitle">Curso completo de CSS3. ¡Domina CSS de una vez por todas!</h2>
-                    <p class="knowledge__paragraph">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi,
-                        aliquam nemo in facere suscipit at delectus unde labore ad officia iste accusantium eaque
-                        aperiam laborum est voluptate totam? Modi, obcaecati?</p>
-                    <a href="#" class="cta">Entra al curso</a>
+            
+            <!-- 
+                NUEVO GRAFICO: Mochila con anillos de rastreo
+                - Reemplaza el placeholder <img>
+            -->
+            <div class="fade-in-section mt-24 max-w-6xl mx-auto" style="transition-delay: 500ms;">
+                <!-- Contenedor del gráfico -->
+                <div class="relative w-80 h-80 sm:w-96 sm:h-96 mx-auto bg-gray-900/50 border border-green-800/50 rounded-full flex items-center justify-center shadow-2xl shadow-green-500/30">
+                    <!-- Anillo de pulso 1 (Efecto GPS) -->
+                    <div class="absolute w-full h-full rounded-full bg-green-500/10 animate-ping opacity-75"></div>
+                    <!-- Anillo de pulso 2 (con retraso) -->
+                    <div class="absolute w-3/4 h-3/4 rounded-full bg-green-500/20 animate-ping opacity-75" style="animation-delay: 0.8s;"></div>
+                    
+                    <!-- Icono de la Mochila (El gráfico principal) -->
+                    <i data-lucide="backpack" class="w-48 h-48 sm:w-56 sm:h-56 color-accent drop-shadow-[0_5px_15px_rgba(132,204,22,0.4)]"></i>
                 </div>
-
-                <figure class="knowledge__picture">
-                    <img src="./images/macbook.png" class="knowledge__img">
-                </figure>
+                <p class="mt-8 text-sm text-gray-500 italic">Dispositivo miniaturizado para mochilas y objetos de alto valor.</p>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="price container">
-            <h2 class="subtitle">Obten el plan perfecto para aprender</h2>
-
-            <div class="price__table">
-                <div class="price__element">
-                    <p class="price__name">Flexbox</p>
-                    <h3 class="price__price">Free</h3>
-
-                    <div class="price__items">
-                        <p class="price__features">Flexbox</p>
-                        <p class="price__features">Layouts</p>
-                        <p class="price__features">Responsive</p>
+    <!-- 
+      Seccion de Problematica y Justificacion
+      - Más padding y animación de entrada
+    -->
+    <section id="problematica" class="py-24 sm:py-32 bg-[#10141b] border-t border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 class="fade-in-section section-title text-5xl text-white">Contexto y Problematica</h3>
+            <div class="grid md:grid-cols-2 gap-16 mt-16 items-start">
+                <!-- Columna de Problema e Impacto -->
+                <div class="fade-in-section">
+                    <h4 class="text-3xl font-semibold text-gray-300 mb-8 flex items-center">
+                        <i data-lucide="alert-octagon" class="w-8 h-8 mr-3 text-red-500"></i>
+                        El Impacto de las Perdidas
+                    </h4>
+                    <p class="lg:text-lg text-gray-400 mb-8 leading-relaxed font-light">
+                        La alta frecuencia de perdidas o robos de articulos personales, especialmente laptops y tablets, genera un impacto economico y emocional significativo en la comunidad de la UAC Larapa.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start p-5 bg-[#1a1e26] rounded-2xl shadow-lg border border-gray-700">
+                            <i data-lucide="trending-down" class="w-6 h-6 mr-4 mt-1 text-red-400 flex-shrink-0"></i>
+                            <div>
+                                <span class="text-white font-semibold">Perdidas economicas:</span> <span class="text-gray-400 font-light">El costo de reemplazo de dispositivos es una carga pesada.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start p-5 bg-[#1a1e26] rounded-2xl shadow-lg border border-gray-700">
+                            <i data-lucide="frown" class="w-6 h-6 mr-4 mt-1 text-red-400 flex-shrink-0"></i>
+                            <div>
+                                <span class="text-white font-semibold">Estres y Ansiedad:</span> <span class="text-gray-400 font-light">Preocupacion prolongada que afecta el bienestar y rendimiento.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start p-5 bg-[#1a1e26] rounded-2xl shadow-lg border border-gray-700">
+                            <i data-lucide="zap-off" class="w-6 h-6 mr-4 mt-1 text-red-400 flex-shrink-0"></i>
+                            <div>
+                                <span class="text-white font-semibold">Interrupcion Academica:</span> <span class="text-gray-400 font-light">Dependencia de dispositivos para actividades diarias.</span>
+                            </div>
+                        </div>
                     </div>
-
-                    <a href="#" class="price__cta">Empieza ahora</a>
                 </div>
-
-
-                <div class="price__element price__element--best">
-                    <p class="price__name">Grid</p>
-                    <h3 class="price__price">$30/mes</h3>
-
-                    <div class="price__items">
-                        <p class="price__features">Grid</p>
-                        <p class="price__features">Implicit Grid</p>
-                        <p class="price__features">Responsive</p>
+                
+                <!-- Columna de Justificacion / Beneficios -->
+                <div class="fade-in-section" style="transition-delay: 200ms;">
+                    <h4 class="text-3xl font-semibold text-gray-300 mb-8 flex items-center">
+                        <i data-lucide="check-circle-2" class="w-8 h-8 mr-3 color-secondary"></i>
+                        Justificacion: Beneficios Clave
+                    </h4>
+                    <div class="p-8 bg-blue-900/30 border-l-4 border-secondary rounded-2xl shadow-2xl shadow-blue-900/50">
+                        <h5 class="text-2xl font-bold text-blue-300 mb-6">MochiFind: Solucion Efectiva y Accesible</h5>
+                        <ul class="space-y-5 text-gray-200 font-medium">
+                            <li class="flex items-start">
+                                <i data-lucide="shield-check" class="w-5 h-5 mr-3 mt-1 color-secondary flex-shrink-0"></i>
+                                Tranquilidad y Confianza en la proteccion de bienes.
+                            </li>
+                            <li class="flex items-start">
+                                <i data-lucide="school" class="w-5 h-5 mr-3 mt-1 color-secondary flex-shrink-0"></i>
+                                Fomenta el Enfoque Academico sin preocupaciones.
+                            </li>
+                            <li class="flex items-start">
+                                <i data-lucide="piggy-bank" class="w-5 h-5 mr-3 mt-1 color-secondary flex-shrink-0"></i>
+                                Propuesta Economica y Accesible (Costo objetivo: ~$30).
+                            </li>
+                            <li class="flex items-start">
+                                <i data-lucide="globe" class="w-5 h-5 mr-3 mt-1 color-secondary flex-shrink-0"></i>
+                                Fomento de un ambiente universitario seguro y tecnologico.
+                            </li>
+                        </ul>
                     </div>
-
-                    <a href="#" class="price__cta">Empieza ahora</a>
                 </div>
-
-
-                <div class="price__element">
-                    <p class="price__name">Animaciones</p>
-                    <h3 class="price__price">$40/mes</h3>
-
-                    <div class="price__items">
-                        <p class="price__features">Animation</p>
-                        <p class="price__features">Transition</p>
-                        <p class="price__features">Render Website</p>
-                    </div>
-
-                    <a href="#" class="price__cta">Empieza ahora</a>
-                </div>
-
-
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="testimony">
-            <div class="testimony__container container">
-                <img src="./images/leftarrow.svg" class="testimony__arrow" id="before">
+    <!-- 
+      Seccion de Solucion IoT 
+      - Animación de entrada y retrasos escalonados en las tarjetas
+    -->
+    <section id="solucion" class="py-24 sm:py-32 bg-[#0b0c10]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h3 class="fade-in-section section-title mx-auto text-5xl text-white">Nuestra Solucion: IoT Avanzado</h3>
+            <p class="fade-in-section mt-4 text-xl text-gray-400 max-w-4xl mx-auto mb-20 font-light">
+                MochiFind integra multiples tecnologias para un rastreo continuo y altamente confiable.
+            </p>
 
-                <section class="testimony__body testimony__body--show" data-id="1">
-                    <div class="testimony__texts">
-                        <h2 class="subtitle">Mi nombre es Jordan Alexander, <span class="testimony__course">estudiante
-                                de CSS.</span></h2>
-                        <p class="testimony__review">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut est
-                            esse, asperiores eaque totam nulla repudiandae quasi, deserunt culpa exercitationem
-                            blanditiis laborum veniam laboriosam saepe reiciendis dolorem. Cum, ratione voluptatum!</p>
-                    </div>
-
-                    <figure class="testimony__picture">
-                        <img src="./images/face.jpg" class="testimony__img">
-                    </figure>
-                </section>
-
-                <section class="testimony__body" data-id="2">
-                    <div class="testimony__texts">
-                        <h2 class="subtitle">Mi nombre es Alejandra Perez, <span class="testimony__course">estudiante de
-                                CSS.</span></h2>
-                        <p class="testimony__review">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut est
-                            esse, asperiores eaque laborum veniam laboriosam saepe reiciendis dolorem. Cum, ratione
-                            voluptatum!</p>
-                    </div>
-
-                    <figure class="testimony__picture">
-                        <img src="./images/face2.jpg" class="testimony__img">
-                    </figure>
-                </section>
-
-                <section class="testimony__body" data-id="3">
-                    <div class="testimony__texts">
-                        <h2 class="subtitle">Mi nombre es Karen Arteaga, <span class="testimony__course">estudiante de
-                                CSS.</span></h2>
-                        <p class="testimony__review">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut est
-                            esse, niam laboriosam saepe reiciendis dolorem. Cum, ratione voluptatum!</p>
-                    </div>
-
-                    <figure class="testimony__picture">
-                        <img src="./images/face3.jpg" class="testimony__img">
-                    </figure>
-                </section>
-
-                <section class="testimony__body" data-id="4">
-                    <div class="testimony__texts">
-                        <h2 class="subtitle">Mi nombre es Kevin Ramirez, <span class="testimony__course">estudiante de
-                                CSS.</span></h2>
-                        <p class="testimony__review">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut est
-                            esse, niam laboriosam saepe reiciendis dolorem. Cum, ratione voluptatum!</p>
-                    </div>
-
-                    <figure class="testimony__picture">
-                        <img src="./images/face4.jpg" class="testimony__img">
-                    </figure>
-                </section>
-
-
-                <img src="./images/rightarrow.svg" class="testimony__arrow" id="next">
-            </div>
-        </section>
-
-        <section class="questions container">
-            <h2 class="subtitle">Preguntas frecuentes</h2>
-            <p class="questions__paragraph">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea, porro
-                doloribus neque perspiciatis sapiente fuga.</p>
-
-            <section class="questions__container">
-                <article class="questions__padding">
-                    <div class="questions__answer">
-                        <h3 class="questions__title">¿Qué es CSS?
-                            <span class="questions__arrow">
-                                <img src="./images/arrow.svg" class="questions__img">
-                            </span>
-                        </h3>
-
-                        <p class="questions__show">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos
-                            facere, quidem eum id excepturi assumenda explicabo nam accusamus veritatis voluptates
-                            eveniet adipisci, dicta nihil nemo modi possimus officiis quam atque? Lorem ipsum, dolor sit
-                            amet consectetur adipisicing elit. Quos facere, quidem eum id excepturi assumenda explicabo
-                            nam accusamus veritatis voluptates eveniet adipisci, dicta nihil nemo modi possimus officiis
-                            quam atque?</p>
-                    </div>
-                </article>
-
-                <article class="questions__padding">
-                    <div class="questions__answer">
-                        <h3 class="questions__title">¿Qué aprenderé en este curso?
-                            <span class="questions__arrow">
-                                <img src="./images/arrow.svg" class="questions__img">
-                            </span>
-                        </h3>
-
-                        <p class="questions__show">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos
-                            facere, quidem eum id excepturi assumenda explicabo nam accusamus veritatis voluptates
-                            eveniet adipisci, dicta nihil nemo modi possimus officiis quam atque? Lorem ipsum, dolor sit
-                            amet consectetur adipisicing elit. Quos facere, quidem eum id excepturi assumenda explicabo
-                            nam accusamus veritatis voluptates eveniet adipisci, dicta nihil nemo modi possimus officiis
-                            quam atque?</p>
-                    </div>
-                </article>
-
-                <article class="questions__padding">
-                    <div class="questions__answer">
-                        <h3 class="questions__title">¿Qué es CSS GRID?
-                            <span class="questions__arrow">
-                                <img src="./images/arrow.svg" class="questions__img">
-                            </span>
-                        </h3>
-
-                        <p class="questions__show">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos
-                            facere, quidem eum id excepturi assumenda explicabo nam accusamus veritatis voluptates
-                            eveniet adipisci, dicta nihil nemo modi possimus officiis quam atque? Lorem ipsum, dolor sit
-                            amet consectetur adipisicing elit. Quos facere, quidem eum id excepturi assumenda explicabo
-                            nam accusamus veritatis voluptates eveniet adipisci, dicta nihil nemo modi possimus officiis
-                            quam atque?</p>
-                    </div>
-                </article>
-            </section>
-
-            <section class="questions__offer">
-                <h2 class="subtitle">¿Estas listo para aprender CSS?</h2>
-                <p class="questions__copy">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet ratione
-                    architecto magnam, officiis ex porro vero est voluptates quaerat quibusdam illo veniam reprehenderit
-                    eius atque tempora iure ab non autem.</p>
-                <a href="#" class="cta">Aprende ahora</a>
-            </section>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <section class="footer__container container">
-            <nav class="nav nav--footer">
-                <h2 class="footer__title">Curso CSS.</h2>
-
-                <ul class="nav__link nav__link--footer">
-                    <li class="nav__items">
-                        <a href="#" class="nav__links">Inicio</a>
-                    </li>
-                    <li class="nav__items">
-                        <a href="#" class="nav__links">Acerca de</a>
-                    </li>
-                    <li class="nav__items">
-                        <a href="#" class="nav__links">Contacto</a>
-                    </li>
-                    <li class="nav__items">
-                        <a href="#" class="nav__links">Blog</a>
-                    </li>
-                </ul>
-            </nav>
-
-            <form class="footer__form" action="https://formspree.io/f/mknkkrkj" method="POST">
-                <h2 class="footer__newsletter">Suscribete a la newsletter</h2>
-                <div class="footer__inputs">
-                    <input type="email" placeholder="Email:" class="footer__input" name="_replyto">
-                    <input type="submit" value="Registrate" class="footer__submit">
+            <!-- Tarjetas de Tecnología con animación escalonada -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="fade-in-section apple-card p-8 shadow-xl">
+                    <i data-lucide="locate-fixed" class="w-12 h-12 mx-auto mb-6 color-accent"></i>
+                    <h4 class="text-2xl font-semibold mb-3 text-white">Localizacion en Tiempo Real (GPS)</h4>
+                    <p class="text-gray-400 font-light">
+                        Rastreo continuo y confiable de objetos gracias a la precision de los modulos GPS.
+                    </p>
                 </div>
-            </form>
-        </section>
-
-        <section class="footer__copy container">
-            <div class="footer__social">
-                <a href="#" class="footer__icons"><img src="./images/facebook.svg" class="footer__img"></a>
-                <a href="#" class="footer__icons"><img src="./images/twitter.svg" class="footer__img"></a>
-                <a href="#" class="footer__icons"><img src="./images/youtube.svg" class="footer__img"></a>
+                <div class="fade-in-section apple-card p-8 shadow-xl" style="transition-delay: 200ms;">
+                    <i data-lucide="cpu" class="w-12 h-12 mx-auto mb-6 color-accent"></i>
+                    <h4 class="text-2xl font-semibold mb-3 text-white">Hardware Inteligente (NodeMCU / LoRa)</h4>
+                    <p class="text-gray-400 font-light">
+                        Uso de NodeMCU y LoRa para una comunicacion robusta y de bajo consumo energetico.
+                    </p>
+                </div>
+                <div class="fade-in-section apple-card p-8 shadow-xl" style="transition-delay: 300ms;">
+                    <i data-lucide="signal" class="w-12 h-12 mx-auto mb-6 color-accent"></i>
+                    <h4 class="text-2xl font-semibold mb-3 text-white">Conectividad Global (SIM / WiFi)</h4>
+                    <p class="text-gray-400 font-light">
+                        Integracion de modulos SIM y WiFi para asegurar un flujo de datos constante a nuestra plataforma.
+                    </p>
+                </div>
             </div>
 
-            <h3 class="footer__copyright">Derechos reservados &copy; Jordan Alexander</h3>
-        </section>
+            <h4 class="fade-in-section text-3xl font-semibold text-gray-300 mt-24 mb-12 section-title mx-auto">Flujo de Datos del Sistema</h4>
+            
+            <!-- Diagrama de Flujo (Iconos actualizados) -->
+            <div class="fade-in-section diagram-container">
+                <div class="diagram-item p-8 bg-green-900/30 border-2 border-accent rounded-3xl shadow-xl shadow-green-900/50">
+                    <i data-lucide="backpack" class="w-12 h-12 mb-4 color-accent"></i>
+                    <p class="font-bold text-xl color-accent">GPS LOAKER</p>
+                    <p class="text-sm text-gray-400 mt-1">Dispositivo MochiFind</p>
+                </div>
+                <div class="diagram-arrow">
+                    <i data-lucide="arrow-right" class="w-10 h-10 color-accent animate-pulse"></i>
+                </div>
+                <div class="diagram-item p-8 bg-blue-900/50 border-2 border-secondary rounded-3xl shadow-xl shadow-blue-900/50">
+                    <i data-lucide="database" class="w-12 h-12 mb-4 color-secondary"></i>
+                    <p class="font-bold text-xl color-secondary">SERVER (Nube)</p>
+                    <p class="text-sm text-gray-400 mt-1">Procesamiento de datos</p>
+                </div>
+                <div class="diagram-arrow">
+                    <i data-lucide="arrow-right" class="w-10 h-10 color-accent animate-pulse"></i>
+                </div>
+                <div class="diagram-item p-8 bg-green-900/50 border-2 border-accent rounded-3xl shadow-xl shadow-green-900/50">
+                    <i data-lucide="map" class="w-12 h-12 mb-4 color-accent"></i>
+                    <p class="font-bold text-xl color-accent">BROWSER (Mapa)</p>
+                    <p class="text-sm text-gray-400 mt-1">Interfaz de Usuario Final</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Seccion de Alcance y Restricciones -->
+    <section id="alcance" class="py-24 sm:py-32 bg-[#10141b] border-t border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 class="fade-in-section section-title text-5xl text-white">Alcance y Restricciones</h3>
+            <div class="grid md:grid-cols-2 gap-16 mt-16">
+                <!-- Alcance del Proyecto -->
+                <div class="fade-in-section">
+                    <h4 class="text-3xl font-semibold text-gray-300 mb-8 flex items-center">
+                        <i data-lucide="target" class="w-8 h-8 mr-3 color-secondary"></i>
+                        Alcance Inicial Estrategico
+                    </h4>
+                    <ul class="space-y-6 text-gray-400 font-light">
+                        <li class="flex items-start p-6 bg-gray-900/70 rounded-2xl border-l-4 border-secondary shadow-lg">
+                            <span class="color-secondary font-bold text-2xl mr-5 flex-shrink-0">01</span>
+                            <div>
+                                <span class="text-white font-semibold">Implementacion en Sede Larapa:</span> Foco en la Facultad de Ingenieria y Arquitectura.
+                            </div>
+                        </li>
+                        <li class="flex items-start p-6 bg-gray-900/70 rounded-2xl border-l-4 border-secondary shadow-lg">
+                            <span class="color-secondary font-bold text-2xl mr-5 flex-shrink-0">02</span>
+                            <div>
+                                <span class="text-white font-semibold">Usuarios Clave:</span> Estudiantes que portan dispositivos y valoran la seguridad de sus pertenencias.
+                            </div>
+                        </li>
+                        <li class="flex items-start p-6 bg-gray-900/70 rounded-2xl border-l-4 border-secondary shadow-lg">
+                            <span class="color-secondary font-bold text-2xl mr-5 flex-shrink-0">03</span>
+                            <div>
+                                <span class="text-white font-semibold">Monitoreo Principal:</span> Localizacion eficiente de mochilas mediante la integracion de IoT.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Limitaciones -->
+                <div class="fade-in-section" style="transition-delay: 200ms;">
+                    <h4 class="text-3xl font-semibold text-gray-300 mb-8 flex items-center">
+                        <i data-lucide="construction" class="w-8 h-8 mr-3 color-accent"></i>
+                        Limitaciones y Desafios
+                    </h4>
+                    <ul class="space-y-6 text-gray-400 font-light">
+                        <li class="flex items-start p-6 bg-gray-900/70 rounded-2xl border-l-4 border-accent shadow-lg">
+                            <span class="color-accent font-bold text-2xl mr-5 flex-shrink-0">!</span>
+                            <div>
+                                <span class="text-white font-semibold">Restricciones Presupuestarias:</span> Costo objetivo de ~$30, balanceando economia y funcionalidad.
+                            </div>
+                        </li>
+                        <li class="flex items-start p-6 bg-gray-900/70 rounded-2xl border-l-4 border-accent shadow-lg">
+                            <span class="color-accent font-bold text-2xl mr-5 flex-shrink-0">!</span>
+                            <div>
+                                <span class="text-white font-semibold">Cobertura de Red:</span> Posibles limitaciones de senal GPS/SIM en zonas especificas del campus.
+                            </div>
+                        </li>
+                        <li class="flex items-start p-6 bg-gray-900/70 rounded-2xl border-l-4 border-accent shadow-lg">
+                            <span class="color-accent font-bold text-2xl mr-5 flex-shrink-0">!</span>
+                            <div>
+                                <span class="text-white font-semibold">Dependencia Externa:</span> Calidad del rastreo sujeta al servicio de modulos SIM externos.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seccion de Conclusiones y Futuro -->
+    <section id="futuro" class="py-24 sm:py-32 bg-[#0b0c10]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h3 class="fade-in-section text-5xl font-bold mb-6 border-b-4 border-accent inline-block pb-3 text-white">Vision Estrategica y Cierre</h3>
+            <p class="fade-in-section text-gray-400 text-xl max-w-4xl mx-auto mb-20 font-light">
+                MochiFind sienta las bases para una gestion tecnologica avanzada de seguridad personal en entornos universitarios.
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-10 mb-12">
+                <div class="fade-in-section p-8 bg-gray-900 rounded-2xl shadow-2xl shadow-green-900/50 transition duration-300 transform hover:bg-green-900/50">
+                    <i data-lucide="rocket" class="w-10 h-10 mx-auto mb-6 color-accent"></i>
+                    <h4 class="text-2xl font-semibold mb-3 text-white">Proximos Pasos</h4>
+                    <p class="text-gray-400 font-light">
+                        Finalizar integracion, desplegar un Piloto con estudiantes y Escalar el sistema basandonos en el *feedback* real.
+                    </p>
+                </div>
+                <div class="fade-in-section p-8 bg-gray-900 rounded-2xl shadow-2xl shadow-green-900/50 transition duration-300 transform hover:bg-green-900/50" style="transition-delay: 200ms;">
+                    <i data-lucide="gem" class="w-10 h-10 mx-auto mb-6 color-accent"></i>
+                    <h4 class="text-2xl font-semibold mb-3 text-white">Nuestra Promesa Central</h4>
+                    <p class="color-secondary text-lg italic font-semibold">
+                        "Con nosotros, lo mas valioso de tu vida universitaria no se pierde. Se protege."
+                    </p>
+                </div>
+                <div class="fade-in-section p-8 bg-gray-900 rounded-2xl shadow-2xl shadow-green-900/50 transition duration-300 transform hover:bg-green-900/50" style="transition-delay: 300ms;">
+                    <i data-lucide="move-diagonal-2" class="w-10 h-10 mx-auto mb-6 color-accent"></i>
+                    <h4 class="text-2xl font-semibold mb-3 text-white">Expansion Futura</h4>
+                    <p class="text-gray-400 font-light">
+                        Expandir el sistema a bicicletas, scooters, autos y mascotas, manteniendo la seguridad como prioridad.
+                    </p>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-accent text-white py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p class="text-gray-500">&copy; 2024 Proyecto MochiFind. Desarrollado por ALFREDO OSCAR YUPANQUI CUBA.</p>
+            <p class="mt-2 color-accent">Sistema Inteligente de Localizacion y Gestion de Propiedades Personales.</p>
+        </div>
     </footer>
+    
+    <!-- Inicializar Lucide Icons para renderizar los SVG -->
+    <script>
+        lucide.createIcons();
+    </script>
 
-    <script src="./js/slider.js"></script>
-    <script src="./js/questions.js"></script>
-    <script src="./js/menu.js"></script>
+    <!-- 
+      SCRIPT PARA ANIMACIONES DE SCROLL
+      - Usa Intersection Observer para detectar cuándo una sección entra en la pantalla
+      - Añade la clase 'is-visible' para activar la animación CSS
+    -->
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const sections = document.querySelectorAll('.fade-in-section');
+
+            const observerOptions = {
+                root: null, // usa el viewport
+                rootMargin: '0px',
+                threshold: 0.1 // 10% del elemento debe ser visible
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Animamos solo una vez
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+
 </body>
-
 </html>
